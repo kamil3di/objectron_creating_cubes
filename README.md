@@ -2,7 +2,7 @@
 
 This application creates a cube around the detected object.
 
-Here, how you can run this application through your console.
+Here, how you can run this application through your terminal.
 
 # 1) Clone this repository and move to directory
 > git clone https://github.com/kamil3di/objectron_boxes.git
