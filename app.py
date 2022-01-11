@@ -49,7 +49,7 @@ with mp_objectron.Objectron(static_image_mode=False,
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = objectron.process(image)
 
-    #We need camera's intrinsic and extrinsic parameters
+    #Here I create contour points to draw boxes
     def draw_boxes(detected_object):
       shape = image.shape 
       pointList = []
@@ -73,7 +73,7 @@ with mp_objectron.Objectron(static_image_mode=False,
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     if results.detected_objects:
         for detected_object in results.detected_objects:
-            #To find the corners
+            #This for loop is designed to draw boxes
             contourList = draw_boxes(detected_object)
             for contour in contourList:
               cv2.drawContours(image, [contour.astype(int)],-1,(0,255,0),-3)
