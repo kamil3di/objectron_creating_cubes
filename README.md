@@ -1,6 +1,6 @@
 # Creating cube around object
 
-This application creates a cube around the detected object.
+This application creates a cube around the detected object through MediaPipe Objectron.
 
 ![objectron](https://user-images.githubusercontent.com/29722241/148952311-11a62709-9985-412f-81dd-b0d8c052eb65.png)
 
