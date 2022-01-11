@@ -49,7 +49,7 @@ with mp_objectron.Objectron(static_image_mode=False,
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = objectron.process(image)
 
-    #Here I create contour points to draw boxes
+    #We need camera's intrinsic and extrinsic parameters
     def draw_boxes(detected_object):
       shape = image.shape 
       pointList = []
@@ -58,25 +58,25 @@ with mp_objectron.Objectron(static_image_mode=False,
         Y = int(detected_object.landmarks_2d.landmark[point].y*shape[0])
         pointList.append(np.array([X,Y]))
 
-      contourPts1 = np.array([[pointList[0]],[pointList[4]],[pointList[5]],[pointList[1]]])
-      contourPts2 = np.array([[pointList[2]],[pointList[3]],[pointList[7]],[pointList[6]]])
-      contourPts3 = np.array([[pointList[0]],[pointList[1]],[pointList[3]],[pointList[2]]])
-      contourPts4 = np.array([[pointList[4]],[pointList[5]],[pointList[7]],[pointList[6]]])
-      contourPts5 = np.array([[pointList[0]],[pointList[4]],[pointList[6]],[pointList[2]]])
-      contourPts6 = np.array([[pointList[1]],[pointList[5]],[pointList[7]],[pointList[3]]])
+      rectangle1 = np.array([[pointList[0]],[pointList[4]],[pointList[5]],[pointList[1]]])
+      rectangle2 = np.array([[pointList[2]],[pointList[3]],[pointList[7]],[pointList[6]]])
+      rectangle3 = np.array([[pointList[0]],[pointList[1]],[pointList[3]],[pointList[2]]])
+      rectangle4 = np.array([[pointList[4]],[pointList[5]],[pointList[7]],[pointList[6]]])
+      rectangle5 = np.array([[pointList[0]],[pointList[4]],[pointList[6]],[pointList[2]]])
+      rectangle6 = np.array([[pointList[1]],[pointList[5]],[pointList[7]],[pointList[3]]])
 
-      contourList = [contourPts1,contourPts2,contourPts3,contourPts4,contourPts5,contourPts6]
-      return contourList
+      rectangleList = [rectangle1,rectangle2,rectangle3,rectangle4,rectangle5,rectangle6]
+      return rectangleList
 
     # Draw the box landmarks on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     if results.detected_objects:
         for detected_object in results.detected_objects:
-            #This for loop is designed to draw boxes
-            contourList = draw_boxes(detected_object)
-            for contour in contourList:
-              cv2.drawContours(image, [contour.astype(int)],-1,(0,255,0),-3)
+            #To find the corners
+            rectangleList = draw_boxes(detected_object)
+            for rectangle in rectangleList:
+              cv2.drawContours(image, [rectangle.astype(int)],-1,(0,255,0),-3)
             #cv2.rectangle(image,pointfor2,pointfor5,(0,255,0),3)
             mp_drawing.draw_landmarks(
               image, detected_object.landmarks_2d, mp_objectron.BOX_CONNECTIONS)
