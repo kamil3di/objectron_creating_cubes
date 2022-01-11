@@ -2,6 +2,8 @@
 
 This application creates a cube around the detected object.
 
+![objectron](https://user-images.githubusercontent.com/29722241/148952311-11a62709-9985-412f-81dd-b0d8c052eb65.png)
+
 Here, how you can run this application through your terminal.
 
 # 1) Clone this repository and move to directory
